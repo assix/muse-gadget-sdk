@@ -216,6 +216,14 @@ menu "ESP32 Device SDK"
             red first, unlike the usual WS2812 green first (GRB). Turn this
             off if your board shows green as red and amber as green.
 
+    config HOMEHUB_LED_STRIP_GPIO
+        int "Addressable status LED GPIO"
+        depends on HOMEHUB_LED_BACKEND_DEVKIT_GPIO27
+        default 27
+        help
+            GPIO of the addressable (WS2812) status LED. The ESP32-C5
+            DevKitC-1 has it on GPIO27; set this to your board's LED pin.
+
     config HOMEHUB_DISPLAY
         bool
         default y if HOMEHUB_LED_BACKEND_IDEASPARK_ST7789

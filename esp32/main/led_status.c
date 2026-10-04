@@ -75,7 +75,7 @@ static const char *TAG = "link.led";
 #elif CONFIG_HOMEHUB_LED_BACKEND_DEVKIT_GPIO27
 // ESP32-C5 DevKitC-1 onboard addressable RGB LED. The separate red power LED
 // is always on when USB-powered and is not firmware-controlled.
-#define LED_STRIP_GPIO       27
+#define LED_STRIP_GPIO       CONFIG_HOMEHUB_LED_STRIP_GPIO
 #define LED_STRIP_LED_COUNT  1
 #define LED_STRIP_RMT_RES_HZ (10 * 1000 * 1000)
 #elif CONFIG_HOMEHUB_LED_BACKEND_VOICE_RING
