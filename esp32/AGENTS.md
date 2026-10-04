@@ -62,7 +62,9 @@ before adding a feature to one.
 | M5Stack StickS3 | `esp32s3` | `devices/sdkconfig.muse;devices/sdkconfig.muse-m5stack-sticks3` | manual |
 | M5Stack StopWatch | `esp32s3` | `devices/sdkconfig.muse;devices/sdkconfig.muse-m5stack-stopwatch` | manual |
 | M5Stack CoreS3 | `esp32s3` | `devices/sdkconfig.muse;devices/sdkconfig.muse-m5stack-cores3` | `tools/muse/board.sh build cores3` |
+| Freenove FNK0104B | `esp32s3` | `devices/sdkconfig.muse;devices/sdkconfig.muse-fnk0104b` | `tools/muse/board.sh build fnk0104b` |
 | M5Stack StickC Plus2 | `esp32` | `devices/sdkconfig.muse;devices/sdkconfig.muse-m5stack-stickc-plus2` | manual |
+| M5Stack Core2 (v1.0) | `esp32` | `devices/sdkconfig.muse;devices/sdkconfig.muse-m5stack-core2` | `tools/muse/board.sh build core2` |
 
 The default profile expects the C5 DevKitC-1: an addressable status LED on
 GPIO27, the BOOT button on GPIO28 (active low), 8 MB flash and quad PSRAM.
@@ -119,7 +121,7 @@ voice note that Muse answers in the app, and the dial sets the speaker volume
 
 ### Boards with the full UI, by hand
 
-`tools/muse/board.sh build|flash <s3|s3n|aipi|box3|c6|watcher|sticks3|plus2|cardputer-adv|stopwatch|cores3> [SERIAL|PORT]`
+`tools/muse/board.sh build|flash <s3|s3n|aipi|box3|c6|watcher|sticks3|plus2|cardputer-adv|stopwatch|cores3|core2> [SERIAL|PORT]`
 builds one board in `build-muse-<profile>/`, logs to
 `/tmp/muse_build_<board>.log`, and clears `managed_components/` before and
 after so it doesn't clash with other boards. When flashing, it finds the
@@ -460,6 +462,16 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 Run one `idf.py build` first: `test_link_discovery` compiles cJSON from
 `managed_components/`, and that directory only exists after a build. Set `CC`
 or `CXX` to change compilers.
+
+Two tests skip quietly when their inputs are missing; check the summary for
+`skipped=`:
+
+- `test_noise_core` links against the host's PSA Crypto library, found with
+  `pkg-config mbedcrypto`. Install `libmbedtls-dev` and `pkg-config` on Debian
+  or Ubuntu (as CI does), or `mbedtls` and `pkgconf` with Homebrew.
+- `test_link_pairing_handshake` builds Mbed TLS from source for its
+  real-crypto case, so it needs `IDF_PATH` (set by `export.sh`) or
+  `MBEDTLS_SOURCE_DIR`.
 
 ## Before you hand back work
 

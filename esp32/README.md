@@ -156,7 +156,7 @@ attack. Set it up on a network you trust.
 
 ## Boards
 
-The last seven run the full on-screen UI: an animated avatar, push-to-talk and
+Boards marked UI run the full on-screen UI: an animated avatar, push-to-talk and
 settings. Audio and image support vary by board, so check the feature table in
 [`devices/`](devices). The others show status on a light, a ring or a simple
 status screen.
@@ -180,6 +180,8 @@ status screen.
 | M5Stack StopWatch | UI, push-to-talk, settings, images | see [`AGENTS.md`](AGENTS.md#boards-with-the-full-ui-by-hand) |
 | M5Stack CoreS3 | UI, touch, PWR push-to-talk, settings, images | see [`AGENTS.md`](AGENTS.md#boards-with-the-full-ui-by-hand) |
 | M5Stack StickC Plus2 | UI, push-to-talk, two-button menu, images | see [`AGENTS.md`](AGENTS.md#boards-with-the-full-ui-by-hand) |
+| M5Stack Core2 (v1.0) | UI, push-to-talk on the touch strip, touch menu, images | `tools/muse/board.sh build core2` |
+| Freenove FNK0104B | UI, touch, BOOT push-to-talk, settings, images | `tools/muse/board.sh build fnk0104b` |
 
 See [`devices/`](devices) for each board's hardware, features, and where to
 buy one.
@@ -255,6 +257,12 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 ```
 
 Run `idf.py build` once first so the downloaded components are in place.
+
+Two crypto tests are skipped unless the host has what they need. Install the
+host Mbed TLS library (`brew install mbedtls pkgconf` on macOS,
+`apt-get install libmbedtls-dev pkg-config` on Debian or Ubuntu), and run the
+tests from a terminal where you ran ESP-IDF's `export.sh`, which sets
+`IDF_PATH`. The last line of the output shows `skipped=` if any were left out.
 
 ## Community
 
