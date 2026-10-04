@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Generic ESP32-C6 devkit without PSRAM (e.g. ESP32-C6-N16 modules).
-# Load last, after sdkconfig.defaults.
+# Generic ESP32-C6 devkit without PSRAM (e.g. ESP32-C6-N16 modules, or
+# Espressif's ESP32-C6-DevKitC-1), native USB. A status light board, without
+# the full UI. Load last, after sdkconfig.defaults.
 #
 # The defaults are tuned for the ESP32-C5 with 8 MB PSRAM (full NimBLE pools,
 # 16 KB TLS buffers routed to PSRAM, home-network tunnel). On a PSRAM-less C6
@@ -22,6 +23,7 @@
 # and both watchdogs are off so it never resets). This overlay trims everything
 # to fit internal SRAM. Modeled on devices/sdkconfig.muse-waveshare-c6-18,
 # minus the Waveshare board/display selection.
+CONFIG_IDF_TARGET="esp32c6"
 CONFIG_SPIRAM=n
 # TLS: keep allocations in internal SRAM and shrink outbound records; dynamic
 # input buffers are sized to each record instead of a fixed 16 KB.
@@ -48,6 +50,6 @@ CONFIG_BT_NIMBLE_TRANSPORT_EVT_COUNT=15
 # On ESP32-C6 devkits the BOOT button is GPIO9 (the default 28 is the C5
 # DevKitC-1). Needed to confirm pairing and to long-press-reset setup.
 CONFIG_HOMEHUB_BUTTON_GPIO=9
-# Note: the status LED backend still defaults to the C5 DevKitC-1 addressable
-# LED on GPIO27 (LED_STRIP_GPIO in main/led_status.c). Point it at your
-# board's RGB LED pin, or follow up with a Kconfig option for it.
+# The addressable RGB LED is on GPIO8 on the ESP32-C6-DevKitC-1 and most C6
+# devkits (GPIO27 is the C5 DevKitC-1's). Change it here if yours differs.
+CONFIG_HOMEHUB_LED_STRIP_GPIO=8
